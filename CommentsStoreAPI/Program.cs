@@ -1,5 +1,6 @@
 using CommentsStoreAPI.Models;
 using CommentsStoreAPI.Services;
+using Microsoft.AspNetCore.OData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ builder.Services.Configure<CommentStoreDBSettings>(
 builder.Services.AddSingleton<CommentsService>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddOData(options => options.Select().Filter().OrderBy());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

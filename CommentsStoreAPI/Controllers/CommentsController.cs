@@ -1,6 +1,8 @@
 ﻿using CommentsStoreAPI.Models;
 using CommentsStoreAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace CommentsStoreAPI.Controllers
 {
@@ -16,6 +18,7 @@ namespace CommentsStoreAPI.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         public async Task<List<Commentary>> Get()
             => await _commentsService.GetAsync();
 
@@ -30,7 +33,7 @@ namespace CommentsStoreAPI.Controllers
             return comment;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Post(Commentary newComment)
         {
             await _commentsService.CreateAsync(newComment);
@@ -61,7 +64,7 @@ namespace CommentsStoreAPI.Controllers
 
             return NoContent();
 
-        }
+        }*/
     }
 
     
