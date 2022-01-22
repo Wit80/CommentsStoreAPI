@@ -2,6 +2,7 @@
 using CommentsStoreAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 
 namespace CommentsStoreAPI.Controllers
@@ -22,25 +23,18 @@ namespace CommentsStoreAPI.Controllers
         public async Task<List<Commentary>> Get()
             => await _commentsService.GetAsync();
 
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Commentary>> Get(string id) 
-        {
-            var comment = await _commentsService.GetAsync(id);
-            if (comment is null) 
-            {
-                return NotFound();
-            }
-            return comment;
-        }
+        
 
-        /*[HttpPost]
-        public async Task<IActionResult> Post(Commentary newComment)
+        [HttpPost]
+        [EnableQuery]
+        public async Task<IActionResult> Post([FromODataUri] Commentary newComment)
         {
             await _commentsService.CreateAsync(newComment);
             return CreatedAtAction(nameof(Get), new { id = newComment.Id}, newComment);
         }
         [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, Commentary updatedComment) 
+        [EnableQuery]
+        public async Task<IActionResult> Put([FromODataUri] string id, Commentary updatedComment) 
         {
             var comment = _commentsService.GetAsync(id);
             if (comment is null) 
@@ -53,7 +47,8 @@ namespace CommentsStoreAPI.Controllers
         }
 
         [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Delete(string id) 
+        [EnableQuery]
+        public async Task<IActionResult> Delete([FromODataUri] string id) 
         {
             var comment = await _commentsService.GetAsync(id);
             if (comment is null)
@@ -64,7 +59,7 @@ namespace CommentsStoreAPI.Controllers
 
             return NoContent();
 
-        }*/
+        }
     }
 
     
